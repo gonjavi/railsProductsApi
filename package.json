@@ -1,5 +1,5 @@
 {
-  "name": "prueba4",
+  "name": "railsproductsapi",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
