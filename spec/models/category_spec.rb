@@ -1,4 +1,4 @@
-require 'rails_helper'
+=begin require 'rails_helper'
 
 RSpec.describe Category, type: :model do
   describe 'validations' do
@@ -6,4 +6,4 @@ RSpec.describe Category, type: :model do
     it { should belong_to(:product).class_name('Product') }
   end
 end
-
+ =end
