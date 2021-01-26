@@ -67,7 +67,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
   end
 
-  describe 'UPDATE #put - a user' do
+  describe 'PUT #update - a user' do
     it 'updates a user' do
       expect do
         put 'update', params: { id: @user.id, user: { name: 'Peter', last_name: 'Toro' } }
