@@ -1,6 +1,6 @@
-=begin require 'rails_helper'
+require 'rails_helper'
 
-RSpec.describe Api::V1::ProductController, type: :controller do
+RSpec.describe Api::V1::ProductsController, type: :controller do
   it { should route(:get, '/api/v1/products').to(action: :index) }
 
   describe 'GET #index' do
@@ -9,4 +9,3 @@ RSpec.describe Api::V1::ProductController, type: :controller do
     it { should respond_with(200) }
   end
 end
- =end
