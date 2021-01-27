@@ -27,7 +27,11 @@ module Api
       end
 
       def destroy
-
+        begin
+          render status: 204 if @user.destroy
+        rescue ActiveRecord::RecordNotFound => e
+          puts e.to_s.strip          
+        end        
       end
 
       def set_user
