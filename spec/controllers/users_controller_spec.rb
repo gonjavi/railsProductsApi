@@ -4,7 +4,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   it { should route(:get, '/api/v1/users').to(action: :index) }
   it { should route(:post, '/api/v1/users').to(action: :create) }
   it { should route(:delete, '/api/v1/users/1').to(action: :destroy, id: 1) }
-  it { should route(:put), '/api/v1/users/1'.to(action: :update, id: 1) }
+  it { should route(:put, '/api/v1/users/1').to(action: :update, id: 1) }
   it { should route(:get, '/api/v1/users/1').to(action: :show, id: 1) }
 
   let(:valid_attributes) { { name: 'Javier', last_name: 'Paz' } }
@@ -45,7 +45,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     it 'it fails to create a new user' do
       expect do
-        post :create, params: { measurement: invalid_attributes }
+        post :create, params: { user: invalid_attributes }
       end.to change(User, :count).by(0)
       expect(response).to have_http_status(422)
     end
