@@ -57,7 +57,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       expect do
         delete 'destroy', params: { id: @user.id }
       end.to change(User, :count).by(-1)
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(200)
     end
 
     it 'it fails deletes a user' do
@@ -72,12 +72,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       expect do
         put 'update', params: { id: @user.id, user: { name: 'Peter', last_name: 'Toro' } }
       end.to change(User, :count).by(0)        
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(200)
     end
 
     it 'fails updating a user' do
       expect do
-        put 'update', params: { id: @user.id, user: { name: '', last_name: '' } }
+        put 'update', params: { id: @user.id, user: nil }
       end.to change(User, :count).by(0)
       expect { User.new.foo }.to raise_error(NameError)
       expect(response).to have_http_status(400)
@@ -89,7 +89,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       expect do
         get 'show', params: { id: @user.id }
       end.to change(User, :count).by(0)        
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(200)
     end
 
     it 'fails showing a user' do

@@ -2,7 +2,7 @@ module Api
   module V1
     class UsersController < ApplicationController
       protect_from_forgery with: :null_session
-      before_action :set_user, only: %i[destroy update]
+      before_action :set_user, only: %i[destroy update show]
 
       def index
         user = User.all
@@ -11,9 +11,19 @@ module Api
       end
 
       def show
+        begin
+          render json: UserSerializer.new(@user).serialized_json if @user
+        rescue ActiveRecord::RecordNotFound => e
+          # puts e.to_s.strip          
+        end 
       end
 
       def update
+        if @user.update(user_params)
+          render json: UserSerializer.new(@user).serialized_json
+        else
+          render json: { error: @user.errors.messages }, status: 401
+        end
       end
 
       def create
@@ -27,11 +37,11 @@ module Api
       end
 
       def destroy
-        begin
-          render status: 204 if @user.destroy
-        rescue ActiveRecord::RecordNotFound => e
-          puts e.to_s.strip          
-        end        
+        if @user.destroy
+          render json: { head: :no_content } 
+        else
+          render status: 400
+        end
       end
 
       def set_user
