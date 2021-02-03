@@ -19,10 +19,10 @@ module Api
       end
 
       def update
-        if @user.update(user_params)
-          render json: UserSerializer.new(@user).serialized_json
-        else
-          render json: { error: @user.errors.messages }, status: 401
+        begin          
+          render json: UserSerializer.new(@user).serialized_json if @user.update(user_params)
+        rescue ActionController::ParameterMissing => e
+          render json: e
         end
       end
 

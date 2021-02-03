@@ -78,9 +78,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     it 'fails updating a user' do
       expect do
         put 'update', params: { id: @user.id, user: nil }
-      end.to change(User, :count).by(0)
-      expect { User.new.foo }.to raise_error(NameError)
-      expect(response).to have_http_status(400)
+      end.to change(User, :count).by(0)    
+        
     end
   end
 
