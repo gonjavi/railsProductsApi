@@ -95,15 +95,13 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     it 'fails showing a user' do
       expect do
         get 'show', params: { id: ''  }
-      end.to change(User, :count).by(0)
-      expect(response).to have_http_status(400)
+      end.to  raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'it fails showing a user' do
       expect do
         get 'show', params: { id: 2 }
       end.to raise_error(ActiveRecord::RecordNotFound)
-      expect(response).to have_http_status(400)
     end
   end
 end
