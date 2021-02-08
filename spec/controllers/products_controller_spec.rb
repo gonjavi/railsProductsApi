@@ -6,8 +6,9 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
   it { should route(:delete, '/api/v1/products/1').to(action: :destroy, id: 1) }
   it { should route(:put, '/api/v1/products/1').to(action: :update, id: 1) }
   it { should route(:get, '/api/v1/products/1').to(action: :show, id: 1) }
-
-  let(:valid_attributes) { { product_name: 'desodorante', seller: 'Paz', id: 1, user_id: 1 } }
+  
+  let(:user) { User.create({ name: 'Jose', last_name: ' paz' }) }
+  let(:valid_attributes) { { product_name: 'desodorante', seller: 'Paz', user_id: user.id } }
   let(:invalid_attributes) { { product_name: '', seller: '', user_id: nil } }
 
   before :each do
@@ -24,16 +25,15 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     it do
       params = {
         product: {
-          product: {
-            id: 1,
-            params: {
-              product_name: 'cepillo',
-              seller: 'Mancilla'
-            }
-          }
+          id: 1,
+          params: {
+            product_name: 'cepillo',
+            seller: 'Mancilla',
+            user_id: 1
+          }        
         }
       }
-      should permit(:name, :last_name)
+      should permit(:product_name, :seller)
         .for(:create, params: params)
         .on(:product)
     end
@@ -74,7 +74,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       expect do
         put 'update', params: { id: @product.id, product: { product_name: 'Crema', seller: 'colgate', user_id: 2 } }
       end.to change(Product, :count).by(0)        
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(204)
     end
 
     it 'fails updating a product' do
