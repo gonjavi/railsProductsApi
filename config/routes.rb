@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[index create destroy update show]
       resources :categories, only: %i[index create destroy]
-      resources :products, only: %i[index]
+      resources :products, only: %i[index create destroy update show]
     end
   end
 end
