@@ -14,7 +14,7 @@ module Api
         begin
           render json: ProductSerializer.new(@product).serialized_json if @product
         rescue ActiveRecord::RecordNotFound => e
-          # puts e.to_s.strip          
+          render json: { error: e.to_s }, status: :not_found           
         end 
       end
 
@@ -22,7 +22,7 @@ module Api
         begin          
           render json: ProductSerializer.new(@product).serialized_json if @product.update(product_params)
         rescue ActionController::ParameterMissing => e
-          render json: e
+          render json: { error: e.to_s },status: 400
         end
       end
 
@@ -30,17 +30,12 @@ module Api
         product = Product.new(product_params)
         u = params.require(:product).permit(:user_id)
         user = User.where(id: :u["user_id"])
-
-        begin 
-          if user
-            if product.save
-              render json: ProductSerializer.new(product).serialized_json
-            else
-              render json: { error: product.errors.messages }, status: 422
-            end
+        if user
+          if product.save
+            render json: ProductSerializer.new(product).serialized_json
+          else
+            render json: { error: product.errors.messages }, status: 422
           end
-        rescue ActiveRecord::RecordNotFound => e
-          render json: e
         end
       end
 

@@ -14,8 +14,7 @@ module Api
           render json: UserSerializer.new(user).serialized_json            
         rescue ActiveRecord::RecordNotFound => e
           render json: { error: e.to_s }, status: :not_found      
-        end    
-           
+        end               
       end
 
       def update 

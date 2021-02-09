@@ -53,11 +53,12 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       expect(response).to have_http_status(422)
     end
 
-    #it 'it fails to create a new product with id that does not exist' do
-     # expect do
-      #  post :create, params: { product: invalid_attributes_wrong_id }
-      #end.to raise_error(ActiveRecord::RecordNotFound)
-    #end
+    it 'it fails to create a new product with id that does not exist' do
+      expect do
+       post :create, params: { product: invalid_attributes_wrong_id }
+     end.to change(Product, :count).by(0)
+     expect(response).to have_http_status(422)
+    end
   end
 
   describe 'DELETE #destroy' do
