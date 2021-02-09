@@ -9,6 +9,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
   
   let(:user) { User.create({ name: 'Jose', last_name: ' paz' }) }
   let(:valid_attributes) { { product_name: 'desodorante', seller: 'Paz', user_id: user.id } }
+  let(:invalid_attributes_wrong_id) { { product_name: 'des', seller: 'Paz', user_id: 5 } }
   let(:invalid_attributes) { { product_name: '', seller: '', user_id: nil } }
 
   before :each do
@@ -21,7 +22,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     it { should respond_with(200) }
   end
 
-   describe 'POST #create a product' do
+  describe 'POST #create a product' do
     it do
       params = {
         product: {
@@ -51,6 +52,12 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       end.to change(Product, :count).by(0)
       expect(response).to have_http_status(422)
     end
+
+    #it 'it fails to create a new product with id that does not exist' do
+     # expect do
+      #  post :create, params: { product: invalid_attributes_wrong_id }
+      #end.to raise_error(ActiveRecord::RecordNotFound)
+    #end
   end
 
   describe 'DELETE #destroy' do
