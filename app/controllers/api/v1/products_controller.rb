@@ -27,16 +27,12 @@ module Api
       end
 
       def create
-        product = Product.new(product_params)
-        u = params.require(:product).permit(:user_id)
-        user = User.where(id: :u["user_id"])
-        if user
-          if product.save
-            render json: ProductSerializer.new(product).serialized_json
-          else
-            render json: { error: product.errors.messages }, status: 422
-          end
-        end
+        product = Product.new(product_params) 
+        if product.save
+          render json: ProductSerializer.new(product).serialized_json
+        else
+          render json: { error: product.errors.messages }, status: 422
+        end       
       end
 
       def destroy

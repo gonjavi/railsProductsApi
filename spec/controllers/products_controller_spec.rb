@@ -34,7 +34,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
           }        
         }
       }
-      should permit(:product_name, :seller)
+      should permit(:product_name, :seller, :user_id)
         .for(:create, params: params)
         .on(:product)
     end
