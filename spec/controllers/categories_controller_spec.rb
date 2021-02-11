@@ -6,7 +6,8 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
   it { should route(:delete, '/api/v1/categories/1').to(action: :destroy, id: 1) }
   it { should route(:put, '/api/v1/categories/1').to(action: :update, id: 1) }
   
-  let(:product) { Product.create({ product_name: 'crema', seller: ' paz' }) }
+  let(:user) { User.create({ name: 'Jose', last_name: ' paz' }) }
+  let(:product) { Product.create({ product_name: 'crema', seller: ' paz', user_id: user.id }) }
   let(:valid_attributes) { { name: 'nueva', product_id: product.id } }
   let(:invalid_attributes_wrong_id) { { name: 'des', product_id: 5 } }
   let(:invalid_attributes) { { name: '', product_id: nil } }
