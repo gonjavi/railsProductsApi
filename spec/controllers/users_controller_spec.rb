@@ -97,9 +97,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
 
     it 'it fails showing a user' do
-      expect do
-        get 'show', params: { id: 2 }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+        get 'show', params: { id: 33}
+        expect(response).to have_http_status(:not_found)
     end
   end
 end

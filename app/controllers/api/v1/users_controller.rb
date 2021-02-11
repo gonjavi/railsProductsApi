@@ -9,8 +9,8 @@ module Api
       end
 
       def show
-        user = User.find(params[:id])
         begin
+          user = User.find(params[:id])
           render json: UserSerializer.new(user).serialized_json            
         rescue ActiveRecord::RecordNotFound => e
           render json: { error: e.to_s }, status: :not_found      
