@@ -67,13 +67,12 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       expect do
         delete 'destroy', params: { id: @product.id }
       end.to change(Product, :count).by(-1)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(204)
     end
 
     it 'it fails deletes a product' do
-      expect do
-        delete 'destroy', params: { id: 2 }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+      delete 'destroy', params: { id: 2 }
+      expect(response).to have_http_status(:not_found)
     end
   end
 

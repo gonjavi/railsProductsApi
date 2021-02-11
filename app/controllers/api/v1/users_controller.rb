@@ -35,9 +35,9 @@ module Api
         end
       end
 
-      def destroy
-        user = User.find(params[:id])
+      def destroy        
         begin      
+          user = User.find(params[:id])
           user.destroy  
         rescue ActiveRecord::RecordNotFound => e
           render json: { error: e.to_s }, status: :not_found 

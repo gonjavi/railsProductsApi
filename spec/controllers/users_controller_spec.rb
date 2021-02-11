@@ -61,9 +61,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
 
     it 'it fails deletes a user' do
-      expect do
-        delete 'destroy', params: { id: 2 }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+      delete 'destroy', params: { id: 2 }
+      expect(response).to have_http_status(:not_found)
     end
   end
 
@@ -97,8 +96,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
 
     it 'it fails showing a user' do
-        get 'show', params: { id: 33}
-        expect(response).to have_http_status(:not_found)
+      get 'show', params: { id: 33}
+      expect(response).to have_http_status(:not_found)
     end
   end
 end

@@ -2,7 +2,7 @@ module Api
   module V1
     class ProductsController < ApplicationController
       protect_from_forgery with: :null_session
-      before_action :set_product, only: %i[destroy update show]
+      before_action :set_product, only: %i[update show]
 
       def index
         products = Product.all
@@ -36,10 +36,11 @@ module Api
       end
 
       def destroy
-        if @product.destroy
-          render json: { head: :no_content } 
-        else
-          render status: 400
+        begin      
+          product = Product.find(params[:id])
+          product.destroy  
+        rescue ActiveRecord::RecordNotFound => e
+          render json: { error: e.to_s }, status: :not_found 
         end
       end
 
