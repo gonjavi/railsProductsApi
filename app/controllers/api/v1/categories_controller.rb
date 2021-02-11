@@ -2,7 +2,7 @@ module Api
   module V1
     class CategoriesController < ApplicationController
       protect_from_forgery with: :null_session
-      before_action :set_category, only: %i[destroy update]
+      before_action :set_category, only: %i[update]
 
       def index
         categories = Category.all
@@ -28,10 +28,12 @@ module Api
       end
 
       def destroy
-        if @category.destroy
-          render json: { head: :no_content } 
-        else
-          render status: 400
+        begin      
+          category = Category.find(params[:id])
+          category.destroy  
+          render json: { ok: true, message: 'Category deleted from database' }
+        rescue ActiveRecord::RecordNotFound => e
+          render json: { error: e.to_s }, status: :not_found 
         end
       end
 

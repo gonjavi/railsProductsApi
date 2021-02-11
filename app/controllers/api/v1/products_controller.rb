@@ -2,7 +2,6 @@ module Api
   module V1
     class ProductsController < ApplicationController
       protect_from_forgery with: :null_session
-      before_action :set_product, only: %i[update show]
 
       def index
         products = Product.all
@@ -12,17 +11,19 @@ module Api
 
       def show
         begin
-          render json: ProductSerializer.new(@product).serialized_json if @product
+          product = Product.find(params[:id])
+          render json: ProductSerializer.new(product).serialized_json if product
         rescue ActiveRecord::RecordNotFound => e
           render json: { error: e.to_s }, status: :not_found           
         end 
       end
 
       def update
-        begin          
-          render json: ProductSerializer.new(@product).serialized_json if @product.update(product_params)
-        rescue ActionController::ParameterMissing => e
-          render json: { error: e.to_s },status: 400
+        begin  
+          product = Product.find(params[:id])  
+          render json: ProductSerializer.new(product).serialized_json if product.update(product_params)
+        rescue => e
+          render json: { error: e.to_s }, status: 400
         end
       end
 
@@ -39,13 +40,10 @@ module Api
         begin      
           product = Product.find(params[:id])
           product.destroy  
+          render json: { ok: true, message: 'Product deleted from database' }
         rescue ActiveRecord::RecordNotFound => e
           render json: { error: e.to_s }, status: :not_found 
         end
-      end
-
-      def set_product
-        @product = Product.find(params[:id])
       end
 
       def product_params

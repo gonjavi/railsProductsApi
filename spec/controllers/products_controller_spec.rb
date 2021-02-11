@@ -67,7 +67,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       expect do
         delete 'destroy', params: { id: @product.id }
       end.to change(Product, :count).by(-1)
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(200)
     end
 
     it 'it fails deletes a product' do
@@ -90,6 +90,11 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       end.to change(Product, :count).by(0)    
         
     end
+
+    it 'fails updating a product if product id doesnt exist' do
+      put 'update', params: { id: 3, product: { product_name: '', seller: '', user_id: nil } }
+      expect(response).to have_http_status(400)       
+    end
   end
 
   describe 'GET #show - a product' do
@@ -101,15 +106,13 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     end
 
     it 'fails showing a product' do
-      expect do
-        get 'show', params: { id: ''  }
-      end.to  raise_error(ActiveRecord::RecordNotFound)
+      get 'show', params: { id: ''  }
+      expect(response).to have_http_status(:not_found)
     end
 
     it 'it fails showing a product' do
-      expect do
-        get 'show', params: { id: 2 }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+      get 'show', params: { id: 33 }
+      expect(response).to have_http_status(:not_found)
     end
   end
 end
