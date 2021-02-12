@@ -11,5 +11,6 @@ url: https://products-categories-api.herokuapp.com/
 - put: update a user {{url}}/api/v1/users/:id
 - post: create a user {{url}}/api/v1/users/
 
+
  bundle install
  
