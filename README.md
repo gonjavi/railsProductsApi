@@ -1,4 +1,4 @@
-# README
+# Rails Products Api
 
 This is a public API for users with associations of Products, and Products with associations of Categories. The propject was built with Ruby on Rails and deployed on Heroku. The API allows CRUD actions with Users, Products, and Categories.
 
