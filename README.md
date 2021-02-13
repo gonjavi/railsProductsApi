@@ -22,11 +22,15 @@ products endpoints
 - post: create a product {{url}}/api/v1/products/
 - delete: delete a product {{url}}/api/v1/products/:id
 
+![screenshot](./img/products.png) 
+
 categories endpoints
 - get: users {{url}}/api/v1/users/
 - put: update a user {{url}}/api/v1/users/:id
 - post: create a user {{url}}/api/v1/users/
 - delete: delete a category {{url}}/api/v1/categories/:id
+
+![screenshot](./img/categories.png) 
 
 You can download the file productionProductsAPis.json and import it in postman to test the API.
 
