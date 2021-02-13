@@ -13,7 +13,7 @@ user endpoints
 - post: create a user {{url}}/api/v1/users/
 - delete: delete a user {{url}}/api/v1/products/:id
 
-![screenshot](./img/users.png) 
+![screenshot](./img/users1.png) 
 
 products endpoints
 - get: products {{url}}/api/v1/products/
