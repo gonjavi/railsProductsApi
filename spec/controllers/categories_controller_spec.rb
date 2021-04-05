@@ -69,9 +69,8 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
     end
 
     it 'it fails deletes a category' do
-      expect do
-        delete 'destroy', params: { id: 2 }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+      delete 'destroy', params: { id: 2 }
+      expect(response).to have_http_status(:not_found)
     end
   end
 
